@@ -1,0 +1,13 @@
+{
+  "name": "qa-roadmap-and-sandbox",
+  "version": "1.0.0",
+  "description": "QA Roadmap Knowledge Hub & Educational E-Commerce Sandbox with PostgreSQL, TypeORM, React, Swagger, Playwright, and Newman",
+  "scripts": {
+    "docker:up": "docker compose up --build",
+    "docker:down": "docker compose down",
+    "start:backend": "npm --prefix demo-shop/backend run dev",
+    "start:frontend": "npm --prefix demo-shop/frontend run dev",
+    "test:e2e": "npm --prefix automation-tests run test:e2e",
+    "test:api": "npm --prefix automation-tests run test:api"
+  }
+}

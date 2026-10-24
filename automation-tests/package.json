@@ -1,0 +1,17 @@
+{
+  "name": "qa-automation-tests",
+  "version": "1.0.0",
+  "description": "Automated E2E Playwright and Newman API tests for QA Training E-Commerce App",
+  "type": "module",
+  "scripts": {
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:headed": "playwright test --headed",
+    "test:api": "node run-api-tests.js",
+    "test:all": "npm run test:api && npm run test:e2e"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.1",
+    "newman": "^6.2.1"
+  }
+}

@@ -1,0 +1,55 @@
+services:
+  # 🐘 PostgreSQL Database
+  postgres:
+    image: postgres:16-alpine
+    container_name: qa-shop-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: qashop
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d qashop"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # ⚙️ Node.js Express Backend + Swagger UI + TypeORM
+  backend:
+    build:
+      context: ./demo-shop/backend
+      dockerfile: Dockerfile
+    container_name: qa-shop-backend
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      PORT: 5000
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: qashop
+      NODE_ENV: production
+    ports:
+      - "5000:5000"
+
+  # ⚛️ React Frontend (Vite + Nginx)
+  frontend:
+    build:
+      context: ./demo-shop/frontend
+      dockerfile: Dockerfile
+    container_name: qa-shop-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "5173:80"
+
+volumes:
+  postgres_data:
