@@ -5,7 +5,7 @@ import { CartItemEntity } from '../entities/CartItem.js';
 import { OrderEntity } from '../entities/Order.js';
 import { UserEntity } from '../entities/User.js';
 import { QaSettingEntity } from '../entities/QaSetting.js';
-import { initialProducts, promoCodes } from './mockData.js';
+import { initialProducts, promoCodes, initialOrders } from './mockData.js';
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
@@ -69,9 +69,19 @@ export const dbService = {
       ]);
     }
 
+    const orderRepo = AppDataSource.getRepository(OrderEntity);
+
+    const orderCount = await orderRepo.count();
+    if (orderCount === 0) {
+      console.log('🌱 Seeding initial sample orders into PostgreSQL...');
+      for (const ord of initialOrders) {
+        await orderRepo.save(ord);
+      }
+    }
+
     const qaSetting = await qaRepo.findOneBy({ id: 1 });
     if (!qaSetting) {
-      await qaRepo.save({ id: 1, artificialDelayMs: 0, forceErrorStatus: null });
+      await qaRepo.save({ id: 1, artificialDelayMs: 0, forceErrorStatus: null, isBuggyMode: false });
     }
   },
 
@@ -117,7 +127,11 @@ export const dbService = {
       }
     ]);
 
-    await qaRepo.save({ id: 1, artificialDelayMs: 0, forceErrorStatus: null });
+    for (const ord of initialOrders) {
+      await orderRepo.save(ord);
+    }
+
+    await qaRepo.save({ id: 1, artificialDelayMs: 0, forceErrorStatus: null, isBuggyMode: false });
 
     return { success: true, message: 'PostgreSQL database successfully reset to initial seed' };
   },

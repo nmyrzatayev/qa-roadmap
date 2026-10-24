@@ -96,3 +96,58 @@ export const promoCodes = {
   "FREESHIP": { freeShipping: true, description: "Бесплатная доставка" },
   "FIRST10": { discountPercent: 10, description: "Скидка 10% на первый заказ" }
 };
+
+export const initialOrders = [
+  {
+    id: "ORD-101928",
+    customerName: "Иван Тестеров",
+    customerEmail: "ivan@test.ru",
+    customerPhone: "+7 (999) 111-22-33",
+    customerAddress: "г. Москва, ул. Ленина, д. 42, кв. 10",
+    paymentMethod: "CARD",
+    itemsJson: [
+      { productId: 1, title: "Беспроводные наушники SoundPro X", price: 4990, quantity: 1, total: 4990 }
+    ],
+    subtotal: 4990,
+    discount: 998,
+    shipping: 0,
+    total: 3992,
+    status: "DELIVERED",
+    createdAt: new Date(Date.now() - 86400000 * 2).toISOString()
+  },
+  {
+    id: "ORD-102450",
+    customerName: "Анна Смирнова",
+    customerEmail: "anna.qa@gmail.com",
+    customerPhone: "+7 (999) 444-55-66",
+    customerAddress: "г. Санкт-Петербург, Невский пр., д. 15",
+    paymentMethod: "CARD",
+    itemsJson: [
+      { productId: 4, title: "Худи оверсайз «Debug or Die»", price: 3490, quantity: 2, total: 6980 },
+      { productId: 6, title: "Книга «Тестирование Дот Ком»", price: 1290, quantity: 1, total: 1290 }
+    ],
+    subtotal: 8270,
+    discount: 0,
+    shipping: 350,
+    total: 8620,
+    status: "PAID",
+    createdAt: new Date(Date.now() - 86400000).toISOString()
+  },
+  {
+    id: "ORD-103891",
+    customerName: "Дмитрий Ковалев",
+    customerEmail: "dmitry@corp.ru",
+    customerPhone: "+7 (999) 777-00-11",
+    customerAddress: "г. Казань, ул. Баумана, д. 5",
+    paymentMethod: "CASH",
+    itemsJson: [
+      { productId: 2, title: "Механическая клавиатура RGB Clicker", price: 7490, quantity: 1, total: 7490 }
+    ],
+    subtotal: 7490,
+    discount: 749,
+    shipping: 350,
+    total: 7091,
+    status: "PAID",
+    createdAt: new Date().toISOString()
+  }
+];
