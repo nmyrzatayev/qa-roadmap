@@ -63,6 +63,18 @@
 
 ---
 
+### 🐘 Раздел 7: Практический SQL для QA на базе магазина ([04-sql-practice/](04-sql-practice/))
+*Комплекс SQL-скриптов и задач, привязанных к реальной PostgreSQL базе магазина:*
+- [**01. Базовые запросы**](04-sql-practice/01-basic-queries.sql) — `SELECT`, `WHERE`, `ORDER BY`, `LIKE/ILIKE`, `BETWEEN`, `LIMIT/OFFSET`.
+- [**02. Агрегации и аналитика**](04-sql-practice/02-aggregates-and-grouping.sql) — `COUNT`, `SUM`, `AVG`, `GROUP BY`, `HAVING`.
+- [**03. Связи и JOIN**](04-sql-practice/03-joins-and-relations.sql) — `INNER/LEFT JOIN`, поиск битых записей корзины и товаров без заказов.
+- [**04. Работа с JSON**](04-sql-practice/04-json-queries-postgres.sql) — парсинг массива `orders.itemsJson`, поиск покупок и топ продаж.
+- [**05. Модификация данных и транзакции**](04-sql-practice/05-data-manipulation-and-test-data.sql) — безопасная подготовка тест-стенда с `BEGIN/ROLLBACK`.
+- [**06. Проверка целостности данных**](04-sql-practice/06-qa-data-integrity-checks.sql) — скрипты поиска математических багов, отрицательных остатков и дубликатов.
+- [**07. 15 практических задач с решениями**](04-sql-practice/07-practice-tasks-with-solutions.md) — интерактивные задачи для тестировщиков (Junior ➔ Senior).
+
+---
+
 ## 🎯 Как обучаться по этим материалам
 
 ```
