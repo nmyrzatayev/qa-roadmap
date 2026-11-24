@@ -419,6 +419,31 @@ export const dbService = {
     return orderRepo.find({ order: { createdAt: 'DESC' } });
   },
 
+  async updateOrderStatus(orderId, newStatus) {
+    const orderRepo = AppDataSource.getRepository(OrderEntity);
+    const order = await orderRepo.findOneBy({ id: orderId });
+    if (!order) {
+      return { error: `Заказ ${orderId} не найден`, status: 404 };
+    }
+
+    const qaSettings = await this.getQaSettings();
+
+    // Valid state transitions for QA testing:
+    // In normal mode: cannot cancel DELIVERED or change CANCELLED!
+    if (!qaSettings.isBuggyMode) {
+      if (order.status === 'DELIVERED' && newStatus === 'CANCELLED') {
+        return { error: 'Нельзя отменить уже доставленный покупателю заказ (DELIVERED)', status: 400 };
+      }
+      if (order.status === 'CANCELLED') {
+        return { error: 'Заказ уже отменен и не может изменить статус', status: 400 };
+      }
+    }
+
+    order.status = newStatus;
+    await orderRepo.save(order);
+    return { success: true, order };
+  },
+
   // Users
   async findUserByEmail(email) {
     const userRepo = AppDataSource.getRepository(UserEntity);

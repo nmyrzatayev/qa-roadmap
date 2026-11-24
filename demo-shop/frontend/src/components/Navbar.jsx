@@ -1,11 +1,12 @@
 import React from 'react';
-import { ShoppingBag, Search, ShieldAlert, BookOpen, User, CheckCircle2, Send, Bug } from 'lucide-react';
+import { ShoppingBag, Search, ShieldAlert, BookOpen, User, CheckCircle2, Send, Bug, Package } from 'lucide-react';
 
 export default function Navbar({ 
   search, 
   setSearch, 
   cartCount, 
   onOpenCart, 
+  onOpenOrders,
   onOpenQa, 
   onOpenBugHunter,
   isBuggyMode,
@@ -129,6 +130,17 @@ export default function Navbar({
               <span>Войти</span>
             </button>
           )}
+
+          {/* Orders Button */}
+          <button 
+            onClick={onOpenOrders} 
+            className="btn-icon"
+            style={{ background: '#f8fafc', color: '#334155', borderColor: '#e2e8f0' }}
+            title="Журнал оформленных заказов и тестирование переходов состояний (State Transition)"
+          >
+            <Package size={16} color="#4f46e5" />
+            <span>Заказы</span>
+          </button>
 
           {/* Cart Button */}
           <button 

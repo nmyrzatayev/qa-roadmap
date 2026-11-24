@@ -13,6 +13,23 @@ router.get('/', async (req, res) => {
   }
 });
 
+// PATCH /api/v1/orders/:id/status
+router.patch('/:id/status', async (req, res) => {
+  try {
+    const { status } = req.body;
+    if (!status) {
+      return res.status(400).json({ error: "Поле status обязательно (PAID, PROCESSING, SHIPPED, DELIVERED, CANCELLED)" });
+    }
+    const result = await dbService.updateOrderStatus(req.params.id, status);
+    if (result.error) {
+      return res.status(result.status || 400).json({ error: result.error });
+    }
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // POST /api/v1/orders/checkout
 router.post('/checkout', async (req, res) => {
   try {

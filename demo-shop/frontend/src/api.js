@@ -77,6 +77,28 @@ export const api = {
   },
 
   // Orders
+  async getOrders() {
+    const res = await fetch(`${API_BASE}/orders`);
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.error || 'Ошибка загрузки заказов');
+    }
+    return res.json();
+  },
+
+  async updateOrderStatus(id, status) {
+    const res = await fetch(`${API_BASE}/orders/${id}/status`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status })
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      throw new Error(data.error || 'Ошибка смены статуса');
+    }
+    return data;
+  },
+
   async checkout(payload) {
     const res = await fetch(`${API_BASE}/orders/checkout`, {
       method: 'POST',

@@ -6,6 +6,7 @@ import CheckoutModal from './components/CheckoutModal';
 import QaPanelModal from './components/QaPanelModal';
 import AuthModal from './components/AuthModal';
 import BugHunterQuestModal from './components/BugHunterQuestModal';
+import OrdersModal from './components/OrdersModal';
 import { api } from './api';
 import { AlertCircle, RefreshCw } from 'lucide-react';
 
@@ -24,6 +25,7 @@ export default function App() {
   // Modals
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+  const [isOrdersOpen, setIsOrdersOpen] = useState(false);
   const [isQaOpen, setIsQaOpen] = useState(false);
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [isBugHunterOpen, setIsBugHunterOpen] = useState(false);
@@ -179,6 +181,7 @@ export default function App() {
         setSearch={setSearch}
         cartCount={cartTotalCount}
         onOpenCart={() => setIsCartOpen(true)}
+        onOpenOrders={() => setIsOrdersOpen(true)}
         onOpenQa={() => setIsQaOpen(true)}
         onOpenBugHunter={() => setIsBugHunterOpen(true)}
         isBuggyMode={isBuggyMode}
@@ -335,6 +338,12 @@ export default function App() {
         onClose={() => setIsBugHunterOpen(false)}
         isBuggyMode={isBuggyMode}
         onToggleBuggyMode={handleToggleBuggyMode}
+      />
+
+      <OrdersModal 
+        isOpen={isOrdersOpen}
+        onClose={() => setIsOrdersOpen(false)}
+        showToast={showToast}
       />
 
       <QaPanelModal 
