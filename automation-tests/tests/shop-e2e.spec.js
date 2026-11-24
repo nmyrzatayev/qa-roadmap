@@ -2,6 +2,16 @@ import { test, expect } from '@playwright/test';
 
 test.describe('🛒 QA E-Commerce Shop - E2E Тесты', () => {
 
+  test.beforeAll(async ({ request }) => {
+    // Гарантируем чистый режим работы перед E2E тестами (сброс базы данных и хаоса)
+    const apiHost = process.env.API_HOST || 'http://localhost:5000';
+    try {
+      await request.post(`${apiHost}/api/v1/qa/reset`);
+    } catch (e) {
+      console.warn('⚠️ Could not reset QA state before E2E tests:', e.message);
+    }
+  });
+
   test.beforeEach(async ({ page }) => {
     // Открываем главную страницу магазина
     await page.goto('/');

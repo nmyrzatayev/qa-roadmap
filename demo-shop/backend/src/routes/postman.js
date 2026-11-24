@@ -438,6 +438,22 @@ function generatePostmanCollection(baseUrl) {
                 path: ["api", "v1", "qa", "simulate-chaos"]
               }
             }
+          },
+          {
+            name: "QA - Восстановить штатный режим (Clear Chaos)",
+            request: {
+              method: "POST",
+              header: [{ key: "Content-Type", value: "application/json" }],
+              body: {
+                mode: "raw",
+                raw: JSON.stringify({ delayMs: 0, forceStatus: null, isBuggyMode: false }, null, 2)
+              },
+              url: {
+                raw: "{{baseUrl}}/api/v1/qa/simulate-chaos",
+                host: ["{{baseUrl}}"],
+                path: ["api", "v1", "qa", "simulate-chaos"]
+              }
+            }
           }
         ]
       }

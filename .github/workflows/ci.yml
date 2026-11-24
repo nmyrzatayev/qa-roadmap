@@ -38,6 +38,9 @@ jobs:
         working-directory: automation-tests
         run: npm run test:api
 
+      - name: 🧹 Reset QA Chaos & Re-seed Database
+        run: curl -s -X POST http://localhost:5000/api/v1/qa/reset
+
       - name: 🎭 Install Playwright Browsers
         working-directory: automation-tests
         run: npx playwright install --with-deps chromium

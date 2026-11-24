@@ -10,7 +10,15 @@ newman.run({
   collection: COLLECTION_URL,
   reporters: ['cli'],
   bail: false
-}, function (err, summary) {
+}, async function (err, summary) {
+  // Always restore healthy backend state after chaos tests
+  try {
+    await fetch(`${API_HOST}/api/v1/qa/reset`, { method: 'POST' });
+    console.log('🧹 Backend QA state successfully reset after Newman test run.');
+  } catch (cleanErr) {
+    console.warn('⚠️ Could not reset QA state after Newman tests:', cleanErr.message);
+  }
+
   if (err) {
     console.error('❌ Error executing Newman tests:', err);
     process.exit(1);
